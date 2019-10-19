@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Devel Caml 19.10 - Pavel Zykov</title>
+
+    <meta name="description" content="Есть ли жизнь поверх платформы и продукта?">
+    <meta name="author" content="NAUMEN, Павел Зыков">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+    <link rel="stylesheet" href="css/hljs/vs.css" id="highlight-theme">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <style>
+        .reveal .slide-number {
+            font-size: 22pt;
+            color: black;
+        }
+
+        .reveal pre {
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+
+        .reveal pre code {
+            color: black;
+            background: none;
+            box-shadow: none;
+            max-height: none;
+            overflow: hidden;
+        }
+
+        .reveal pre code.small {
+            font-size: 8pt;
+            line-height: normal;
+        }
+
+        .reveal pre code.medium {
+            font-size: 10pt;
+            line-height: normal;
+        }
+
+        .reveal section img {
+            border: none;
+            box-shadow: none;
+            max-width: 70%
+        }
+
+        .reveal .footer {
+            font-size: 22pt;
+            color: black;
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            bottom: 0.5em;
+        }
+
+        .reveal .cartoon {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+        .reveal .rubber_stamp {
+            font-family: 'Vollkorn', serif;
+            font-size: 39px;
+            line-height: 45px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: red;
+            border: 7px solid red;
+            float: left;
+            padding: 10px 7px;
+            border-radius: 10px;
+
+            opacity: 0.8;
+            -webkit-transform: rotate(-10deg);
+            -o-transform: rotate(-10deg);
+            -moz-transform: rotate(-10deg);
+            -ms-transform: rotate(-10deg);
+            position: absolute;
+            bottom: 20%;
+            right: 1%;
+        }
+
+        .reveal .rubber_stamp::after {
+            position: absolute;
+            content: " ";
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            top: -10px;
+            left: -10px;
+            padding: 10px;
+            background: url(img/noise.png) repeat;
+        }
+
+        .reveal .nau {
+            color: orangered;
+            font-weight: bold;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="reveal">
+    <div class="footer">
+        <span class="nau">NAUMEN</span> Павел Зыков
+    </div>
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section>
+            <h1>Есть ли жизнь поверх платформы и продукта?</h1>
+            <aside class="notes">
+                
+            </aside>
+        </section>
+        <section>
+            <h2></h2>
+            <p>
+            </p>
+            <aside class="notes">
+            </aside>
+        </section>
+        <section>
+            <h1>Вопросы?</h1>
+            <aside class="notes">
+
+            </aside>
+        </section>
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: false,
+        progress: true,
+        history: true,
+        center: true,
+        slideNumber: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                    return !document.body.classList;
+                }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                    return !!document.querySelector('[data-markdown]');
+                }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                    return !!document.querySelector('pre code');
+                }, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+</script>
+
+</body>
+</html>
