@@ -1,259 +1,561 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
 
-<head>
-    <meta charset="utf-8">
+        <title>Devel Caml 19.10 - Pavel Zykov</title>
 
-    <title>Devel Caml 19.10 - Pavel Zykov</title>
+        <meta
+            name="description"
+            content="Есть ли жизнь поверх платформы и продукта?"
+        />
+        <meta name="author" content="NAUMEN, Павел Зыков" />
 
-    <meta name="description" content="Есть ли жизнь поверх платформы и продукта?">
-    <meta name="author" content="NAUMEN, Павел Зыков">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+        />
 
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+        />
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+        <link rel="stylesheet" href="css/reveal.css" />
+        <link rel="stylesheet" href="css/theme/white.css" id="theme" />
 
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/white.css" id="theme">
+        <link rel="stylesheet" href="css/hljs/vs.css" id="highlight-theme" />
 
-    <link rel="stylesheet" href="css/hljs/vs.css" id="highlight-theme">
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.href = window.location.search.match(/print-pdf/gi)
+                ? "css/print/pdf.css"
+                : "css/print/paper.css";
+            document.getElementsByTagName("head")[0].appendChild(link);
+        </script>
 
-    <!-- Printing and PDF exports -->
-    <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
+        <!--[if lt IE 9]>
+            <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
 
-    <!--[if lt IE 9]>
-    <script src="lib/js/html5shiv.js"></script>
-    <![endif]-->
+        <style>
+            .reveal .slide-number {
+                font-size: 22pt;
+                color: black;
+            }
 
-    <style>
-        .reveal .slide-number {
-            font-size: 22pt;
-            color: black;
-        }
+            .reveal pre {
+                background: none;
+                border: none;
+                box-shadow: none;
+            }
 
-        .reveal pre {
-            background: none;
-            border: none;
-            box-shadow: none;
-        }
+            .reveal pre code {
+                color: black;
+                background: none;
+                box-shadow: none;
+                max-height: none;
+                overflow: hidden;
+            }
 
-        .reveal pre code {
-            color: black;
-            background: none;
-            box-shadow: none;
-            max-height: none;
-            overflow: hidden;
-        }
+            .reveal pre code.small {
+                font-size: 8pt;
+                line-height: normal;
+            }
 
-        .reveal pre code.small {
-            font-size: 8pt;
-            line-height: normal;
-        }
+            .reveal pre code.medium {
+                font-size: 10pt;
+                line-height: normal;
+            }
 
-        .reveal pre code.medium {
-            font-size: 10pt;
-            line-height: normal;
-        }
+            .reveal section img {
+                border: none;
+                box-shadow: none;
+                max-width: 70%;
+            }
 
-        .reveal section img {
-            border: none;
-            box-shadow: none;
-            max-width: 70%
-        }
+            .reveal .footer {
+                font-size: 22pt;
+                color: black;
+                text-align: center;
+                position: absolute;
+                width: 100%;
+                bottom: 0.5em;
+            }
 
-        .reveal .footer {
-            font-size: 22pt;
-            color: black;
-            text-align: center;
-            position: absolute;
-            width: 100%;
-            bottom: 0.5em;
-        }
+            .reveal .cartoon {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
 
-        .reveal .cartoon {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-        }
+            .reveal .rubber_stamp {
+                font-family: "Vollkorn", serif;
+                font-size: 39px;
+                line-height: 45px;
+                text-transform: uppercase;
+                font-weight: bold;
+                color: red;
+                border: 7px solid red;
+                float: left;
+                padding: 10px 7px;
+                border-radius: 10px;
 
-        .reveal .rubber_stamp {
-            font-family: 'Vollkorn', serif;
-            font-size: 39px;
-            line-height: 45px;
-            text-transform: uppercase;
-            font-weight: bold;
-            color: red;
-            border: 7px solid red;
-            float: left;
-            padding: 10px 7px;
-            border-radius: 10px;
+                opacity: 0.8;
+                -webkit-transform: rotate(-10deg);
+                -o-transform: rotate(-10deg);
+                -moz-transform: rotate(-10deg);
+                -ms-transform: rotate(-10deg);
+                position: absolute;
+                bottom: 20%;
+                right: 1%;
+            }
 
-            opacity: 0.8;
-            -webkit-transform: rotate(-10deg);
-            -o-transform: rotate(-10deg);
-            -moz-transform: rotate(-10deg);
-            -ms-transform: rotate(-10deg);
-            position: absolute;
-            bottom: 20%;
-            right: 1%;
-        }
+            .reveal .rubber_stamp::after {
+                position: absolute;
+                content: " ";
+                width: 100%;
+                height: auto;
+                min-height: 100%;
+                top: -10px;
+                left: -10px;
+                padding: 10px;
+                background: url(img/noise.png) repeat;
+            }
 
-        .reveal .rubber_stamp::after {
-            position: absolute;
-            content: " ";
-            width: 100%;
-            height: auto;
-            min-height: 100%;
-            top: -10px;
-            left: -10px;
-            padding: 10px;
-            background: url(img/noise.png) repeat;
-        }
+            .reveal .nau {
+                color: orangered;
+                font-weight: bold;
+                font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
+                    sans-serif;
+            }
 
-        .reveal .nau {
-            color: orangered;
-            font-weight: bold;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        }
-    </style>
-</head>
+            .pyramid {
+                display: flex;
+                flex-direction: column-reverse;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+            }
+            .pyramid > div {
+                border-left: 150px solid transparent;
+                border-right: 150px solid transparent;
+                height: 0;
+                line-height: 125px;
+                text-align: center;
+            }
+            #portal {
+                border-bottom: 125px solid #00529f;
+                width: 0;
+            }
+            #portal:before {
+                content: "Portal";
+                margin-left: -50px;
+            }
+            #meta {
+                border-bottom: 125px solid #6b89a0;
+                width: 300px;
+            }
+            #smp {
+                border-bottom: 125px solid #085896;
+                width: 600px;
+            }
 
-<body>
+            .brickWall {
+                display: flex;
+                flex-direction: column-reverse;
+                height: 300px;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+            .brickRow {
+                display: flex;
+                flex-direction: row;
+                width: 500px;
+                margin: 0 auto;
+            }
 
-<div class="reveal">
-    <div class="footer">
-        <span class="nau">NAUMEN</span> Павел Зыков
-    </div>
-    <!-- Any section element inside of this container is displayed as a slide -->
-    <div class="slides">
-        <section>
-            <h1>Есть ли жизнь поверх платформы и продукта?</h1>
-            <aside class="notes">
-                
-            </aside>
-        </section>
-        <section>
-            <h2>Ликбез</h2>
-            <h3>Проект</h3>
-            <p>
-            </p>
-            <aside class="notes">
-            </aside>
-        </section>
-        <section>
-            <h2>Ликбез</h2>
-            <h3>Продукт</h3>
-            <p>
-            </p>
-            <aside class="notes">
-            </aside>
-        </section>
-        <section>
-            <h2>Ликбез</h2>
-            <h3>SMP&amp;Portal</h3>
-            <p>
-            </p>
-            <aside class="notes">
-            </aside>
-        </section>
-        <section>
-            <h2>Инструменты</h2>
-            <p>
-            </p>
-            <aside class="notes">
-            </aside>
-        </section>
-        <section>
-            <h2>Сопровожение - легко</h2>
-            <p>
-            </p>
-            <aside class="notes">
-            </aside>
-        </section>
-        <section>
-            <h2>Продукт требует больше аналитики</h2>
-            <p>
-            </p>
-            <aside class="notes">
-            </aside>
-        </section>
-        <section>
-            <h2>Давайте жить дружно</h2>
-            <p>
-            </p>
-            <aside class="notes">
-            </aside>
-        </section>
-        <section>
-            <h2></h2>
-            <p>
-            </p>
-            <aside class="notes">
-            </aside>
-        </section>
-        <section>
-            <h1>Вопросы?</h1>
-            <aside class="notes">
+            .brick {
+                position: relative;
+                height: 75px;
+                width: 400px;
+            }
+            
+            .hiddenBrick{
+                opacity: 0;
+                visibility: hidden;
+            }
 
-            </aside>
-        </section>
-    </div>
-</div>
+            #tools {
+                z-index: 1;
+                top:50px;
+                left:65px;
+            }
 
-<script src="lib/js/head.min.js"></script>
-<script src="js/reveal.js"></script>
+            #support {
+            }
 
-<script>
+            #processes {
+                top:-25px;
+                left:100px;
+            }
+            #analytics {
+                top:27px;
+                left:160px;
+                z-index: 2;
+            }
 
-    // Full list of configuration options available at:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
-        controls: false,
-        progress: true,
-        history: true,
-        center: true,
-        slideNumber: true,
+            .side1 {
+                height: 68px;
+                width: 180px;
+                background: #1d6a9a;
+                transform: skewY(-15deg);
+                text-align: center;
+                line-height: 68px;
+                font-size: 36px;
+            }
 
-        transition: 'slide', // none/fade/slide/convex/concave/zoom
+            .side2 {
+                position: relative;
+                top: -56px;
+                left: -89px;
+                height: 68px;
+                width: 90px;
+                background: #237fbd;
+                transform: skewY(15deg);
+            }
 
-        // Optional reveal.js plugins
-        dependencies: [
-            {
-                src: 'lib/js/classList.js', condition: function () {
-                    return !document.body.classList;
-                }
-            },
-            {
-                src: 'plugin/markdown/marked.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
-            },
-            {
-                src: 'plugin/markdown/markdown.js', condition: function () {
-                    return !!document.querySelector('[data-markdown]');
-                }
-            },
-            {
-                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
-                    return !!document.querySelector('pre code');
-                }, callback: function () {
-                    hljs.initHighlightingOnLoad();
-                }
-            },
-            {src: 'plugin/zoom-js/zoom.js', async: true},
-            {src: 'plugin/notes/notes.js', async: true}
-        ]
-    });
+            .side3 {
+                position: relative;
+                top: -128px;
+                left: 242px;
+                height: 93px;
+                width: 95px;
+                background: #2696dd;
+                transform: skewY(60deg);
+            }
+            .side3-bin {
+                transform: rotate(-75deg);
+            }
+        </style>
+    </head>
 
-</script>
+    <body>
+        <div class="reveal">
+            <div class="footer">
+                <span class="nau">NAUMEN</span> Павел Зыков
+            </div>
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>Есть ли жизнь поверх платформы и продукта?</h1>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Ликбез</h2>
+                    <h3>Проект</h3>
+                    <p>
+                        это деятельность, определяющийся тремя свойствами:
+                    </p>
+                    <ul>
+                        <li>Цель</li>
+                        <li>Срок</li>
+                        <li>Бюджет</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Ликбез</h2>
+                    <h3>Продукт</h3>
+                    <p>
+                        это нечто (часто результат чьего-то труда), что
+                        продается, покупается и используется.
+                    </p>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Проект vs Продукт</h2>
+                    <p>
+                        проект — это <strong>процесс</strong>, продукт это
+                        <strong>результат</strong>.
+                    </p>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Ликбез</h2>
+                    <h3>SMP&amp;Portal</h3>
+                    <div class="pyramid">
+                        <div class="fragment" id="smp">SMP</div>
+                        <div class="fragment" id="meta">Metainformation</div>
+                        <div class="fragment" id="portal"></div>
+                    </div>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Ликбез</h2>
+                    <h3>Эталонные настройки</h3>
+                    <ul class="fragment">
+                        <li>CORP</li>
+                        <li>ППВ</li>
+                    </ul>
+                    <div class="pyramid">
+                        <div  id="meta">Metainformation</div>
+                    </div>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Первый проект</h2>
+                    <ul>
+                        <li>Разработка backend-в браузере</li>
+                        <li>Один стенд - много разработчиков</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Инструменты</h2>
+                    <div class="brickWall">
+                        <div class="brickRow">
+                            <div class="brick fragment" id="tools">
+                                <div class="side1">Tools</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                            <div class="brick hiddenBrick" id="support">
+                                <div class="side1">Support</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-</body>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Инструменты</h2>
+                    <ul>
+                        <li>smpsync</li>
+                        <li class="fragment">docker-compose</li>
+                        <li class="fragment">Скрипт наполнения</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Сопровождение - сложно</h2>
+                    <ul>
+                        <li>Установка требует точечного обновления коробки</li>
+                        <li>Обновление требует точечного обновления коробки</li>
+                        <li>Портал это много настроек в разных местах - что-то да забываем</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Сопровожение - легко</h2>
+                    <div class="brickWall">
+                        <div class="brickRow">
+                            <div class="brick" id="tools">
+                                <div class="side1">Tools</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                            <div class="brick fragment" id="support">
+                                <div class="side1">Support</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Сопровождение-легко</h2>
+                    <ul>
+                        <li>Инструкции</li>
+                        <li class="fragment">Валидация настроек</li>
+                        <li class="fragment">Скрипт миграции к эталонным настройкам</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Проектные хотелки</h2>
+                    <ul>
+                        <li>Реализовали узкие кейсы клиента</li>
+                        <li>Добавили кучу флажков переключалок</li>
+                        <li class="fragment">Получили костыли, которые до сих пор не можем выпилить</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Продукт требует больше аналитики</h2>
+                    <div class="brickWall">
+                        <div class="brickRow">
+                            <div class="brick" id="tools">
+                                <div class="side1">Tools</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                            <div class="brick" id="support">
+                                <div class="side1">Support</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="brickRow">
+                            <div class="brick fragment" id="analytics">
+                                <div class="side1">Analytics</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                            <div class="brick hiddenBrick" id="processes">
+                                <div class="side1">Processes</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Продуктовое развитие</h2>
+                    <ul>
+                        <li>Составили план релиза</li>
+                        <li>Пошли фигачить</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Продукту нужно много процессов</h2>
+                    <div class="brickWall">
+                        <div class="brickRow">
+                            <div class="brick" id="tools">
+                                <div class="side1">Tools</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                            <div class="brick" id="support">
+                                <div class="side1">Support</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="brickRow">
+                            <div class="brick" id="analytics">
+                                <div class="side1">Analytics</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                            <div class="brick fragment" id="processes">
+                                <div class="side1">Processes</div>
+                                <div class="side2"></div>
+                                <div class="side3-bin">
+                                    <div class="side3"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Процессы</h2>
+                    <ul>
+                        <li>Документация</li>
+                        <li>Roadmap</li>
+                        <li>Коммерческое предложение</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h2>Выводы</h2>
+                    <ul>
+                        <li>Аналитика и Процессы самое главное</li>
+                        <li>Проекты и продукт должны делать разные команды</li>
+                    </ul>
+                    <aside class="notes"></aside>
+                </section>
+                <section>
+                    <h1>Вопросы?</h1>
+                    <aside class="notes"></aside>
+                </section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: false,
+                progress: true,
+                history: true,
+                center: true,
+                slideNumber: true,
+
+                transition: "slide", // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    {
+                        src: "lib/js/classList.js",
+                        condition: function() {
+                            return !document.body.classList;
+                        }
+                    },
+                    {
+                        src: "plugin/markdown/marked.js",
+                        condition: function() {
+                            return !!document.querySelector("[data-markdown]");
+                        }
+                    },
+                    {
+                        src: "plugin/markdown/markdown.js",
+                        condition: function() {
+                            return !!document.querySelector("[data-markdown]");
+                        }
+                    },
+                    {
+                        src: "plugin/highlight/highlight.js",
+                        async: true,
+                        condition: function() {
+                            return !!document.querySelector("pre code");
+                        },
+                        callback: function() {
+                            hljs.initHighlightingOnLoad();
+                        }
+                    },
+                    { src: "plugin/zoom-js/zoom.js", async: true },
+                    { src: "plugin/notes/notes.js", async: true }
+                ]
+            });
+        </script>
+    </body>
 </html>
